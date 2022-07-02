@@ -36,14 +36,43 @@ public class LinkedList implements List {
 
     @Override
     public Node modifyElementByConsole(String toModifyValue) {
-        
-        return null;
+       
+
+        Node salida = null;
+		
+		if(list != null) {
+			
+			Node aux = list;
+			while(aux != null) {
+				
+				if(aux.getValue().equals(toModifyValue)) {
+					salida = aux;
+                    salida.setValue("H");
+				}
+				aux = aux.getNext();
+			}
+		}
+
+		
+		return salida;
+       
     }
 
     @Override
     public void printElements() {
         
-        
+        if(list == null) {
+			System.out.println("-");
+		} else {
+			
+			Node aux = list;
+			while(aux != null) {
+				
+				System.out.print(aux.getValue() + " ");
+				aux = aux.getNext();
+			}
+			System.out.println();
+		}
     }
     
 }

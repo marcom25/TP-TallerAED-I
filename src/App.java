@@ -5,5 +5,10 @@ public class App {
         LinkedList list = new LinkedList();
 
         list.insert("hola");
+
+        list.modifyElementByConsole("hola");
+        list.printElements();
+        
+
     }
 }
