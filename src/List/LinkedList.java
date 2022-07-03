@@ -23,25 +23,33 @@ public class LinkedList implements List {
     }
 
     @Override
-    public boolean delete(String value /*<-- esto debe ser 'Node value'*/)  {
+    public boolean delete(String value)  {
         Node aux = list;
-        Node last;
+        Node temp = null;
 
-        while (aux != null) {
-            last = aux;
-            if(aux.getValue().equals(value)){
-                last.setNext(aux.getNext()/*.getValue()*/); /* <-- aca no se puede referenciar al siguiente nodo ya que tenemos
-                                                que aplicar aux.getNext().getValue() <-- no se puede en este
-                                                caso ya que los valores de getValue() son de tipo String, y el método 
-                                                setNext() solo permite insertar objetos tipo 'Node'. Hay que cambiar 
-                                                el tipo de parámetro que recibe este método. *Yo lo cambiaría pero 
-                                                marquinhos es un salame y quiere dejar el código como nos lo dio el profe*
-                                            */
-                // System.out.println("aux.getValue(): " + aux.getValue());
-                return true;
+
+        if (aux != null) {
+            while (aux != null) {
+                
+                if (aux.getNext() == null) {
+                    aux = aux.getNext();
+                    
+                    return true;
+                }
+
+                if(aux.getValue().equals(value)){
+                    
+                    temp = aux.getNext();
+                    aux.setNext(temp.getNext());
+                    System.out.println("dwaddw");
+                    return true;
+                }
+                
+                aux = aux.getNext();
             }
-            aux = aux.getNext();
         }
+
+        
         return false;
     }
 
