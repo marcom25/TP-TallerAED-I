@@ -3,7 +3,8 @@ public class Node {
 
 	private String value;
 	private Node next;
-	
+	public int pos = -1;
+
 	public Node(String value) {
 		super();
 		this.value = value;

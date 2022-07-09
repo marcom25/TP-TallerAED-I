@@ -1,23 +1,51 @@
 package List;
 
+import java.util.Objects;
+
 
 
 public class LinkedList implements List {
-
     private Node list;
+    private Node first, end;
 
     @Override
     public boolean insert(String value) {
         Node newNode = new Node(value);
+        if (list == null) {
+            newNode.pos = 0;
+            first=end=newNode;
+        }else {
+            end.pos++;
+        }
+        
         newNode.setNext(list);
+        first = newNode;
         list = newNode;
-
+        
         return true;
     }
 
     @Override
     public boolean insert(String value, int pos) {
-        
+    //     Node prev, current;
+    //     prev = first;
+    //     current = first.getNext();
+    //     Node aux = list;
+    //     if(aux != null){
+    //         if(aux.pos == first.pos){
+    //             aux.setNext(first.getNext());
+    //             first = aux;
+    //         }else if() {
+
+    //         }
+
+    //         // if (aux.pos == pos) {
+    //         //     newNode.pos = 0;
+    //         //     first=end=newNode;
+    //         // }else 
+    //         //     end.pos++;
+            
+    //     }
 
         return false;
     }
@@ -25,45 +53,46 @@ public class LinkedList implements List {
     @Override
     public boolean delete(String value)  {
         Node aux = list;
-        Node temp = null;
-
-
         if (aux != null) {
-            while (aux != null) {
+            if (first==end && !Objects.equals(value, first.getValue())) {
+                first=end=null;
+            }else if (Objects.equals(value, first.getValue())) {
+                first = aux.getNext();
+            }else {
+                Node prev, current;
+                prev = first;
+                current = first.getNext();
                 
-                if (aux.getNext() == null) {
-                    aux = aux.getNext();
-                    
-                    return true;
+                while (current != null && !Objects.equals(current.getValue(), value)) {                    
+                    prev = prev.getNext();
+                    current = current.getNext();
                 }
 
-                if(aux.getValue().equals(value)){
-                    
-                    temp = aux.getNext();
-                    aux.setNext(temp.getNext());
-                    System.out.println("dwaddw");
-                    return true;
+                if (current != null) {
+                    prev.setNext(current.getNext());
+                    if (current==end) {
+                        end = prev;
+                        return true;
+                    }
                 }
-                
-                aux = aux.getNext();
             }
         }
 
-        
-        return false;
+        return false; 
     }
 
     @Override
     public Node searchElement(String value) {
-        while (list != null) {
-            if (list.getValue() == value) {
+        Node aux = list;
+        while (aux != null) {
+            if (aux.getValue() == value) {
                 System.out.println("Elemento encontrado.");
-                return list;
+                return aux;
             }else 
-                list = list.getNext();   
+                aux = aux.getNext();   
         }
         System.out.println("Elemento no encontrado.");
-        return list;
+        return aux;
     }
 
     @Override
@@ -94,7 +123,7 @@ public class LinkedList implements List {
 			System.out.println("-");
 		} else {
 			
-			Node aux = list;
+			Node aux = first;
 			while(aux != null) {
 				
 				System.out.print(aux.getValue() + " ");
@@ -103,5 +132,6 @@ public class LinkedList implements List {
 			System.out.println();
 		}
     }
+
     
 }

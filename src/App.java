@@ -17,9 +17,8 @@ public class App {
         
         
         // list.modifyElementByConsole("hola");
-        list.delete("10");
-        System.out.println(list.delete("10"));
-        // list.searchElement("hola");
+        // list.delete("3");
+        // list.searchElement("3");
         list.printElements();
         
 
