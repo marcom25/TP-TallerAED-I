@@ -55,15 +55,17 @@ public class LinkedList implements List {
 
     @Override
     public Node searchElement(String value) {
-        while (list != null) {
-            if (list.getValue() == value) {
+        Node aux = list;
+
+        while (aux != null) {
+            if (aux.getValue() == value) {
                 System.out.println("Elemento encontrado.");
-                return list;
+                return aux;
             }else 
-                list = list.getNext();   
+            aux = aux.getNext();   
         }
         System.out.println("Elemento no encontrado.");
-        return list;
+        return aux;
     }
 
     @Override

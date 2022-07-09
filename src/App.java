@@ -18,8 +18,8 @@ public class App {
         
         // list.modifyElementByConsole("hola");
         list.delete("10");
-        System.out.println(list.delete("10"));
-        // list.searchElement("hola");
+        // System.out.println(list.delete("10"));
+        list.searchElement("2");
         list.printElements();
         
 
