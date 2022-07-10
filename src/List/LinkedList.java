@@ -12,10 +12,11 @@ public class LinkedList implements List {
     public boolean insert(String value) {
         Node newNode = new Node(value);
         if (list == null) {
-            newNode.pos = 0;
+            newNode.pos = -1;
             first=end=newNode;
+            end.pos = 1;
         }else {
-            end.pos++;
+            newNode.pos = end.pos++;
         }
         
         newNode.setNext(list);
@@ -25,27 +26,57 @@ public class LinkedList implements List {
         return true;
     }
 
-    @Override
+    // @Override
     public boolean insert(String value, int pos) {
-    //     Node prev, current;
-    //     prev = first;
-    //     current = first.getNext();
+    //     Node newNode = new Node(value);
+    //     newNode.pos = pos;
     //     Node aux = list;
-    //     if(aux != null){
-    //         if(aux.pos == first.pos){
-    //             aux.setNext(first.getNext());
-    //             first = aux;
-    //         }else if() {
 
+    //     if (aux == null && pos >= 0) {
+    //         System.out.println("Entra a meter el primer nodo");
+    //         first = newNode;
+    //         return true;
+    //     }else if (aux.pos > pos && pos >= 0 || aux.pos == pos) {
+    //         newNode.setNext(aux);
+    //         aux = newNode;
+    //         return true;
+    //     }else if (pos >= 0) {
+    //         System.out.println("Entra a meter uno");
+    //         Node current = first;
+    //         Node prev = first;
+
+    //         while (current != null) {
+    //             System.out.println("Entro, valor actual de la posicion: " + current.pos);
+    //             System.out.println("Valor del nodo: " + current.getValue());
+    //             if(pos != current.pos){
+    //                 System.out.println("No encontró uno igual");
+    //                 prev = prev.getNext();
+    //                 current = current.getNext();
+    //                 if (current != null) {
+    //                     System.out.println("current: " + current.getValue());
+    //                 }
+    //             }else if(current.pos > pos ){
+    //                 prev.setNext(newNode);
+    //                 newNode.setNext(current);  
+    //                 System.out.println("Nodo nuevo agregado a la posición " + pos + " correctamente!.");
+    //                 return true;
+    //             }else if (current.pos == pos) {
+    //                 System.out.println("Encontró uno igual");
+    //                 prev.setNext(newNode);
+    //                 newNode.setNext(current); 
+    //                 System.out.println("Nodo agregado a una posición ya ocupada.");
+    //                 while (current != null) {
+    //                     System.out.println("Entra al while chico");
+    //                     current.pos++;
+    //                     current = current.getNext();
+    //                 }
+    //                 return true;
+    //             }
     //         }
-
-    //         // if (aux.pos == pos) {
-    //         //     newNode.pos = 0;
-    //         //     first=end=newNode;
-    //         // }else 
-    //         //     end.pos++;
-            
-    //     }
+    //         // prev.setNext(newNode);
+    //         // end = prev.getNext();
+    //     }else 
+    //         System.out.println("Posición indicada menor a 0. Por favor, indique una posición desde 0 en adelante.");
 
         return false;
     }
@@ -126,7 +157,8 @@ public class LinkedList implements List {
 			Node aux = first;
 			while(aux != null) {
 				
-				System.out.print(aux.getValue() + " ");
+				System.out.print(aux.getValue() + " " );
+                System.out.println("index: " + aux.pos);
 				aux = aux.getNext();
 			}
 			System.out.println();

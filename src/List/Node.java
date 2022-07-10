@@ -26,4 +26,11 @@ public class Node {
 		this.next = next;
 	}
 	
+	public void setIndex(int pos){
+		this.pos = pos;
+	}
+
+	public int getIndex(){
+		return pos;
+	}
 }
