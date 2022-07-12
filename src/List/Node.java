@@ -3,7 +3,6 @@ public class Node {
 
 	private String value;
 	private Node next;
-	public int pos = -1;
 
 	public Node(String value) {
 		super();
@@ -25,12 +24,5 @@ public class Node {
 	public void setNext(Node next) {
 		this.next = next;
 	}
-	
-	public void setIndex(int pos){
-		this.pos = pos;
-	}
 
-	public int getIndex(){
-		return pos;
-	}
 }

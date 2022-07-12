@@ -5,85 +5,55 @@ import java.util.Objects;
 
 
 public class LinkedList implements List {
-    private Node list;
     private Node first, end;
 
     @Override
     public boolean insert(String value) {
         Node newNode = new Node(value);
-        if (list == null) {
-            newNode.pos = -1;
-            first=end=newNode;
-            end.pos = 1;
-        }else {
-            newNode.pos = end.pos++;
-        }
         
-        newNode.setNext(list);
+        newNode.setNext(first);
         first = newNode;
-        list = newNode;
         
         return true;
     }
 
     // @Override
     public boolean insert(String value, int pos) {
-    //     Node newNode = new Node(value);
-    //     newNode.pos = pos;
-    //     Node aux = list;
+        Node aux = first;
+        int count = 1;
 
-    //     if (aux == null && pos >= 0) {
-    //         System.out.println("Entra a meter el primer nodo");
-    //         first = newNode;
-    //         return true;
-    //     }else if (aux.pos > pos && pos >= 0 || aux.pos == pos) {
-    //         newNode.setNext(aux);
-    //         aux = newNode;
-    //         return true;
-    //     }else if (pos >= 0) {
-    //         System.out.println("Entra a meter uno");
-    //         Node current = first;
-    //         Node prev = first;
+        if (aux != null) {
+            Node newNode = new Node(value);
 
-    //         while (current != null) {
-    //             System.out.println("Entro, valor actual de la posicion: " + current.pos);
-    //             System.out.println("Valor del nodo: " + current.getValue());
-    //             if(pos != current.pos){
-    //                 System.out.println("No encontró uno igual");
-    //                 prev = prev.getNext();
-    //                 current = current.getNext();
-    //                 if (current != null) {
-    //                     System.out.println("current: " + current.getValue());
-    //                 }
-    //             }else if(current.pos > pos ){
-    //                 prev.setNext(newNode);
-    //                 newNode.setNext(current);  
-    //                 System.out.println("Nodo nuevo agregado a la posición " + pos + " correctamente!.");
-    //                 return true;
-    //             }else if (current.pos == pos) {
-    //                 System.out.println("Encontró uno igual");
-    //                 prev.setNext(newNode);
-    //                 newNode.setNext(current); 
-    //                 System.out.println("Nodo agregado a una posición ya ocupada.");
-    //                 while (current != null) {
-    //                     System.out.println("Entra al while chico");
-    //                     current.pos++;
-    //                     current = current.getNext();
-    //                 }
-    //                 return true;
-    //             }
-    //         }
-    //         // prev.setNext(newNode);
-    //         // end = prev.getNext();
-    //     }else 
-    //         System.out.println("Posición indicada menor a 0. Por favor, indique una posición desde 0 en adelante.");
+            while (count < pos-1 && aux.getNext() != null) {
+                aux = aux.getNext();
+                count++;
+            }
 
+            if (count == pos-1) {
+                newNode.setNext(aux.getNext());
+                aux.setNext(newNode);
+            } else if (count == pos) {
+                newNode.setNext(aux);
+                first = newNode;
+            }
+            else {
+                if (count != pos - 1)
+                    System.out.println("No hay suficientes elementos para insertar en la posicion deseada. Se insertara al final de la firsta");
+                aux.setNext(newNode);
+            }
+
+            return true;
+        }
+        else {
+            insert(value);
+        }
         return false;
     }
 
     @Override
     public boolean delete(String value)  {
-        Node aux = list;
+        Node aux = first;
         if (aux != null) {
             if (first==end && !Objects.equals(value, first.getValue())) {
                 first=end=null;
@@ -114,13 +84,16 @@ public class LinkedList implements List {
 
     @Override
     public Node searchElement(String value) {
-        Node aux = list;
+        Node aux = first;
+        int count = 1;
         while (aux != null) {
             if (aux.getValue() == value) {
-                System.out.println("Elemento encontrado.");
+                System.out.println("Elemento encontrado en la posicion " + count);
                 return aux;
-            }else 
-                aux = aux.getNext();   
+            }else {
+                aux = aux.getNext();
+                count++;
+            }
         }
         System.out.println("Elemento no encontrado.");
         return aux;
@@ -130,9 +103,9 @@ public class LinkedList implements List {
     public Node modifyElementByConsole(String toModifyValue) {
         Node salida = null;
 		
-		if(list != null) {
+		if(first != null) {
 			
-			Node aux = list;
+			Node aux = first;
 			while(aux != null) {
 				
 				if(aux.getValue().equals(toModifyValue)) {
@@ -150,20 +123,22 @@ public class LinkedList implements List {
 
     @Override
     public void printElements() {
-        if(list == null) {
+        if(first == null) {
 			System.out.println("-");
 		} else {
 			
 			Node aux = first;
 			while(aux != null) {
 				
-				System.out.print(aux.getValue() + " " );
-                System.out.println("index: " + aux.pos);
+				System.out.println(aux.getValue() + " " );
 				aux = aux.getNext();
 			}
 			System.out.println();
 		}
     }
 
-    
+    // @Override
+    // public void orderElements() {
+
+    // }
 }
