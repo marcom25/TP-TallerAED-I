@@ -140,7 +140,7 @@ public class LinkedList implements List, Sortable {
 
     @Override
     public void sort() {
-        sortList(first);
+        first = sortList(first);
     }
 
     private Node sortList(Node head) {
@@ -149,20 +149,14 @@ public class LinkedList implements List, Sortable {
             return head;
         }
 
-        Node aux = first;
-        Node slow = first;
-        Node fast = first;
+        
+       Node middle = findMiddle(head);
+       Node nextofmiddle = middle.getNext();
 
-        while (fast != null && fast.getNext() != null) {
-            aux = slow;
-            slow = slow.getNext();
-            fast = fast.getNext().getNext();
-        }
+       middle.setNext(null);
 
-        aux.setNext(null);
-
-        Node leftSide = sortList(first);
-        Node rightSide = sortList(slow);
+        Node leftSide = sortList(head);
+        Node rightSide = sortList(nextofmiddle);
 
         return merge(leftSide, rightSide);
     }
@@ -193,6 +187,19 @@ public class LinkedList implements List, Sortable {
         currentNode.setNext((l1 == null) ? l2 : l1); 
 
         return sortedTemp.getNext();
+    }
+
+    private Node findMiddle(Node head) {
+        if (head == null)
+            return head;
+ 
+        Node slow = head, fast = head;
+ 
+        while (fast.getNext() != null && fast.getNext().getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        return slow;
     }
 
 }
