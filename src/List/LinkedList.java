@@ -1,6 +1,7 @@
 package List;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 
 
@@ -17,7 +18,7 @@ public class LinkedList implements List {
         return true;
     }
 
-    // @Override
+    @Override
     public boolean insert(String value, int pos) {
         Node aux = first;
         int count = 1;
@@ -78,7 +79,7 @@ public class LinkedList implements List {
                 }
             }
         }
-
+            System.out.println("No se encontro el elemento a eliminar.");
         return false; 
     }
 
@@ -87,7 +88,7 @@ public class LinkedList implements List {
         Node aux = first;
         int count = 1;
         while (aux != null) {
-            if (aux.getValue() == value) {
+            if (Objects.equals(aux.getValue(), value)) {
                 System.out.println("Elemento encontrado en la posicion " + count);
                 return aux;
             }else {
@@ -101,8 +102,10 @@ public class LinkedList implements List {
 
     @Override
     public Node modifyElementByConsole(String toModifyValue) {
+        Scanner input = new Scanner(System.in);
+        String newValue;
         Node salida = null;
-		
+
 		if(first != null) {
 			
 			Node aux = first;
@@ -110,13 +113,15 @@ public class LinkedList implements List {
 				
 				if(aux.getValue().equals(toModifyValue)) {
 					salida = aux;
-                    salida.setValue("holanda");
+                    System.out.println("Por favor, ingrese el nuevo valor.");
+                    newValue = input.nextLine();
+                    salida.setValue(newValue);
 				}
 				aux = aux.getNext();
 			}
 		}
 
-		
+		input.close();
 		return salida;
        
     }
@@ -130,7 +135,7 @@ public class LinkedList implements List {
 			Node aux = first;
 			while(aux != null) {
 				
-				System.out.println(aux.getValue() + " " );
+				System.out.print("[" + aux.getValue() + "]-->" );
 				aux = aux.getNext();
 			}
 			System.out.println();
