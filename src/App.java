@@ -17,6 +17,7 @@ public class App {
             System.out.println("4 - Buscar un elemento.");
             System.out.println("5 - Modificar un elemento.");
             System.out.println("6 - Imprimir la lista completa.");
+            System.out.println("7 - Ordenar la lista.");
             System.out.println("X - Cualquier otro numero para salir.");
             System.out.println();
             option = input.nextInt();
@@ -72,11 +73,16 @@ public class App {
                     list.printElements();
 
                     break;
+                case 7:
+                    System.out.println();
+                    list.sort();
+
+                    break;
                 default:
                     flag = false;
                     break;
             }
-            input.close();
+            
 
         }
         

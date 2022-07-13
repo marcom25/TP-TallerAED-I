@@ -3,18 +3,16 @@ package List;
 import java.util.Objects;
 import java.util.Scanner;
 
-
-
-public class LinkedList implements List {
+public class LinkedList implements List, Sortable {
     private Node first, end;
 
     @Override
     public boolean insert(String value) {
         Node newNode = new Node(value);
-        
+
         newNode.setNext(first);
         first = newNode;
-        
+
         return true;
     }
 
@@ -26,61 +24,60 @@ public class LinkedList implements List {
         if (aux != null) {
             Node newNode = new Node(value);
 
-            while (count < pos-1 && aux.getNext() != null) {
+            while (count < pos - 1 && aux.getNext() != null) {
                 aux = aux.getNext();
                 count++;
             }
 
-            if (count == pos-1) {
+            if (count == pos - 1) {
                 newNode.setNext(aux.getNext());
                 aux.setNext(newNode);
             } else if (count == pos) {
                 newNode.setNext(aux);
                 first = newNode;
-            }
-            else {
+            } else {
                 if (count != pos - 1)
-                    System.out.println("No hay suficientes elementos para insertar en la posicion deseada. Se insertara al final de la firsta");
+                    System.out.println(
+                            "No hay suficientes elementos para insertar en la posicion deseada. Se insertara al final de la firsta");
                 aux.setNext(newNode);
             }
 
             return true;
-        }
-        else {
+        } else {
             insert(value);
         }
         return false;
     }
 
     @Override
-    public boolean delete(String value)  {
+    public boolean delete(String value) {
         Node aux = first;
         if (aux != null) {
-            if (first==end && !Objects.equals(value, first.getValue())) {
-                first=end=null;
-            }else if (Objects.equals(value, first.getValue())) {
+            if (first == end && !Objects.equals(value, first.getValue())) {
+                first = end = null;
+            } else if (Objects.equals(value, first.getValue())) {
                 first = aux.getNext();
-            }else {
+            } else {
                 Node prev, current;
                 prev = first;
                 current = first.getNext();
-                
-                while (current != null && !Objects.equals(current.getValue(), value)) {                    
+
+                while (current != null && !Objects.equals(current.getValue(), value)) {
                     prev = prev.getNext();
                     current = current.getNext();
                 }
 
                 if (current != null) {
                     prev.setNext(current.getNext());
-                    if (current==end) {
+                    if (current == end) {
                         end = prev;
                         return true;
                     }
                 }
             }
         }
-            System.out.println("No se encontro el elemento a eliminar.");
-        return false; 
+        System.out.println("No se encontro el elemento a eliminar.");
+        return false;
     }
 
     @Override
@@ -91,7 +88,7 @@ public class LinkedList implements List {
             if (Objects.equals(aux.getValue(), value)) {
                 System.out.println("Elemento encontrado en la posicion " + count);
                 return aux;
-            }else {
+            } else {
                 aux = aux.getNext();
                 count++;
             }
@@ -104,46 +101,105 @@ public class LinkedList implements List {
     public Node modifyElementByConsole(String toModifyValue) {
         Scanner input = new Scanner(System.in);
         String newValue;
-        Node salida = null;
+        Node output = null;
 
-		if(first != null) {
-			
-			Node aux = first;
-			while(aux != null) {
-				
-				if(aux.getValue().equals(toModifyValue)) {
-					salida = aux;
+        if (first != null) {
+
+            Node aux = first;
+            while (aux != null) {
+
+                if (aux.getValue().equals(toModifyValue)) {
+                    output = aux;
                     System.out.println("Por favor, ingrese el nuevo valor.");
                     newValue = input.nextLine();
-                    salida.setValue(newValue);
-				}
-				aux = aux.getNext();
-			}
-		}
+                    output.setValue(newValue);
+                }
+                aux = aux.getNext();
+            }
+        }
 
-		input.close();
-		return salida;
-       
+        return output;
+
     }
 
     @Override
     public void printElements() {
-        if(first == null) {
-			System.out.println("-");
-		} else {
-			
-			Node aux = first;
-			while(aux != null) {
-				
-				System.out.print("[" + aux.getValue() + "]-->" );
-				aux = aux.getNext();
-			}
-			System.out.println();
-		}
+        if (first == null) {
+            System.out.println("-");
+        } else {
+
+            Node aux = first;
+            while (aux != null) {
+
+                System.out.print("[" + aux.getValue() + "]-->");
+                aux = aux.getNext();
+            }
+            System.out.println();
+        }
     }
 
-    // @Override
-    // public void orderElements() {
+    @Override
+    public void sort() {
+        sortList(first);
+    }
 
-    // }
+    private Node sortList(Node head) {
+
+        if (head == null || head.getNext() == null) {
+            return head;
+        }
+
+        Node aux = first;
+        Node slow = first;
+        Node fast = first;
+
+        while (fast != null && fast.getNext() != null) {
+            aux = slow;
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+
+        aux.setNext(null);
+
+        Node leftSide = sortList(first);
+        Node rightSide = sortList(slow);
+
+        return merge(leftSide, rightSide);
+    }
+
+    private Node merge(Node l1, Node l2) {
+
+        Node sortedTemp = new Node("");
+        Node currentNode = sortedTemp;
+
+        while (l1 != null && l2 != null) {
+            int key = l1.getValue().compareToIgnoreCase(l2.getValue());
+            System.out.println(key);
+            if (key < 0) {
+                currentNode.setNext(l1);
+                l1 = l1.getNext();
+            } else if (key == 0) {
+                currentNode.setNext(l1);
+                l1 = l1.getNext();
+            } else if (key > 0) {
+                currentNode.setNext(l2);
+                l2 = l2.getNext();
+            }
+
+            currentNode = currentNode.getNext();
+        }
+
+        if (l1 != null) {
+            currentNode.setNext(l1);
+            l1 = l1.getNext();
+        }
+
+        if (l2 != null) {
+            currentNode.setNext(l2);
+            l2 = l2.getNext();
+        }
+
+        return sortedTemp.getNext();
+    }
+
 }
