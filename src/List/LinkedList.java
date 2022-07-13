@@ -149,9 +149,9 @@ public class LinkedList implements List, Sortable {
             return head;
         }
 
-        Node aux = first;
-        Node slow = first;
-        Node fast = first;
+        Node aux = head;
+        Node slow = head;
+        Node fast = head;
 
         while (fast != null && fast.getNext() != null) {
             aux = slow;
@@ -161,7 +161,7 @@ public class LinkedList implements List, Sortable {
 
         aux.setNext(null);
 
-        Node leftSide = sortList(first);
+        Node leftSide = sortList(head);
         Node rightSide = sortList(slow);
 
         return merge(leftSide, rightSide);
