@@ -173,6 +173,7 @@ public class LinkedList implements List, Sortable {
         Node currentNode = sortedTemp;
 
         while (l1 != null && l2 != null) {
+            System.out.println("l1:"+l1.getValue() + "l2:" + l2.getValue());
             int key = l1.getValue().compareToIgnoreCase(l2.getValue());
             System.out.println(key);
             if (key < 0) {
@@ -189,15 +190,7 @@ public class LinkedList implements List, Sortable {
             currentNode = currentNode.getNext();
         }
 
-        if (l1 != null) {
-            currentNode.setNext(l1);
-            l1 = l1.getNext();
-        }
-
-        if (l2 != null) {
-            currentNode.setNext(l2);
-            l2 = l2.getNext();
-        }
+        currentNode.setNext((l1 == null) ? l2 : l1); 
 
         return sortedTemp.getNext();
     }
