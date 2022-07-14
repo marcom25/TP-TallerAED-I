@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class LinkedList implements List, Sortable {
-    private Node first, end;
+    private Node first;
 
     @Override
     public boolean insert(String value) {
@@ -51,33 +51,29 @@ public class LinkedList implements List, Sortable {
 
     @Override
     public boolean delete(String value) {
-        Node aux = first;
-        if (aux != null) {
-            if (first == end && !Objects.equals(value, first.getValue())) {
-                first = end = null;
+        boolean toReturn = false;
+        if (first != null) {
+            if (Objects.equals(value, first.getValue()) && first.getNext() == null) {
+                first = null;
+                toReturn = true;
             } else if (Objects.equals(value, first.getValue())) {
-                first = aux.getNext();
+                first = first.getNext();
+                toReturn = true;
             } else {
-                Node prev, current;
-                prev = first;
-                current = first.getNext();
-
-                while (current != null && !Objects.equals(current.getValue(), value)) {
-                    prev = prev.getNext();
-                    current = current.getNext();
+                Node aux = first;
+                System.out.println(aux.getValue());
+                while (aux.getNext() != null && !aux.getNext().getValue().equals(value)) {
+                    aux = aux.getNext();
                 }
 
-                if (current != null) {
-                    prev.setNext(current.getNext());
-                    if (current == end) {
-                        end = prev;
-                        return true;
-                    }
+                if (aux.getNext() != null) {
+                    aux.setNext(aux.getNext().getNext());
+                    toReturn = true;
                 }
             }
         }
-        System.out.println("No se encontro el elemento a eliminar.");
-        return false;
+        if (!toReturn) System.out.println("No se encontro el elemento a eliminar.");
+        return toReturn;
     }
 
     @Override
@@ -151,12 +147,12 @@ public class LinkedList implements List, Sortable {
 
         
        Node middle = findMiddle(head);
-       Node nextofmiddle = middle.getNext();
+       Node nextOfMiddle = middle.getNext();
 
        middle.setNext(null);
 
         Node leftSide = sortList(head);
-        Node rightSide = sortList(nextofmiddle);
+        Node rightSide = sortList(nextOfMiddle);
 
         return merge(leftSide, rightSide);
     }
