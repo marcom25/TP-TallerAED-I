@@ -98,7 +98,7 @@ public class LinkedList implements List, Sortable {
         Scanner input = new Scanner(System.in);
         String newValue;
         Node output = null;
-
+        //testeando push
         if (first != null) {
 
             Node aux = first;
